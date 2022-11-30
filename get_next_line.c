@@ -6,7 +6,7 @@
 /*   By: mmorue <mmorue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 13:09:32 by mmorue            #+#    #+#             */
-/*   Updated: 2022/11/30 16:01:10 by mmorue           ###   ########.fr       */
+/*   Updated: 2022/11/30 17:05:33 by mmorue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char    *ft_buffer_sort(char *buffer)
         i++;
     while(buffer[i])
         buffer[k++] = buffer[i++];
-        buffer[k] = '\0';
+    buffer[k] = '\0';
     return(buffer);
 }
 
@@ -66,19 +66,20 @@ char    *get_next_line(int fd)
     static char buffer[BUFFER_SIZE + 1];
     char *str;
     char *old_line;
+
     int i;
-    
     while(str[ft_strlen(str) - 1] != '\n')
     {
-        old_line = ft_read(buffer);
+        //printf("{%s}", buffer);
+        old_line = strjoin(old_line, ft_read(buffer));
         read(fd, buffer, BUFFER_SIZE);
-        str = ft_read(strjoin(old_line, buffer));
+        str = strjoin(old_line, ft_read(buffer));
         //if  (str[ft_strlen(str) - 1] == '\n')
         //{   
         //    ft_buffer_sort(buffer);
         //    return(str);
         //}
-    }
+    }  
         ft_buffer_sort(buffer);
         return(str);
 }
