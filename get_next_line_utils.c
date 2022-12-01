@@ -6,7 +6,7 @@
 /*   By: mmorue <mmorue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 13:09:35 by mmorue            #+#    #+#             */
-/*   Updated: 2022/12/01 14:44:05 by mmorue           ###   ########.fr       */
+/*   Updated: 2022/12/01 15:03:26 by mmorue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ char	*strjoin(char *s1, char *s2)
 		return (0);
 	while (s1[i])
 		str[k++] = s1[i++];
+    //free(s1);
 	i = 0;
 	while (s2[i])
 	{
@@ -46,6 +47,7 @@ char	*strjoin(char *s1, char *s2)
 		i++;
 		k++;
 	}
+    //free(s2);
 	str[k] = '\0';
 	return (str);
 }
