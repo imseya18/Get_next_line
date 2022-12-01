@@ -6,7 +6,7 @@
 /*   By: mmorue <mmorue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 13:09:32 by mmorue            #+#    #+#             */
-/*   Updated: 2022/11/30 17:05:33 by mmorue           ###   ########.fr       */
+/*   Updated: 2022/12/01 14:47:23 by mmorue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
-
-
+//#include "get_next_line_utils.c"
 
 char    *ft_buffer_sort(char *buffer)
 {   
@@ -68,11 +67,22 @@ char    *get_next_line(int fd)
     char *old_line;
 
     int i;
+    old_line = 0;
     while(str[ft_strlen(str) - 1] != '\n')
     {
         //printf("{%s}", buffer);
         old_line = strjoin(old_line, ft_read(buffer));
+       if (old_line && old_line[ft_strlen(old_line) - 1] == '\n')
+           {
+               ft_buffer_sort(buffer);
+               return(old_line);
+           }
         read(fd, buffer, BUFFER_SIZE);
+       // if (old_line && old_line[ft_strlen(old_line) - 1] == '\n')
+       //    {
+       //        ft_buffer_sort(buffer);
+       //        return(old_line);
+       //    }
         str = strjoin(old_line, ft_read(buffer));
         //if  (str[ft_strlen(str) - 1] == '\n')
         //{   
@@ -90,6 +100,10 @@ int main()
     int fd;
 
     fd = open("test.txt", O_RDONLY);
+    printf("%s===============\n",get_next_line(fd));
+    printf("%s===============\n",get_next_line(fd));
+    printf("%s===============\n",get_next_line(fd));
+    printf("%s===============\n",get_next_line(fd));
     printf("%s===============\n",get_next_line(fd));
     printf("%s===============\n",get_next_line(fd));
     printf("%s===============\n",get_next_line(fd));
