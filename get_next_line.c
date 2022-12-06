@@ -6,7 +6,7 @@
 /*   By: mmorue <mmorue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 13:09:32 by mmorue            #+#    #+#             */
-/*   Updated: 2022/12/01 15:03:27 by mmorue           ###   ########.fr       */
+/*   Updated: 2022/12/06 16:34:11 by mmorue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char    *ft_buffer_sort(char *buffer)
         i++;
     if (buffer[i] == '\n')
         i++;
-    while(buffer[i])
+    while(buffer[i] != '\0')
         buffer[k++] = buffer[i++];
     buffer[k] = '\0';
     return(buffer);
@@ -41,7 +41,7 @@ char    *ft_read(char *buffer)
     char *str;
 
     i = 0;
-    k = 0;
+    k = 0;;
     if(ft_strlen(buffer) == 0)
         return(0);
     while(buffer[i] != '\n' && buffer[i] != '\0')
@@ -65,35 +65,39 @@ char    *get_next_line(int fd)
     static char buffer[BUFFER_SIZE + 1];
     char *str;
     char *old_line;
+    int    loop;
+    unsigned int    check;
 
-    int i;
+    loop = 0;
     old_line = 0;
-    while(str[ft_strlen(str) - 1] != '\n')
+    str = 0;
+    check = BUFFER_SIZE;
+    if (fd < 0 || BUFFER_SIZE < 1 || read(fd, 0 , 0) < 0)
+        return (0);
+    while( loop == 0 || (check == BUFFER_SIZE  && str[ft_strlen(str) - 1] != '\n'))
     {
-        //printf("{%s}", buffer);
+        loop = 1;
         old_line = strjoin(old_line, ft_read(buffer));
-       if (old_line && old_line[ft_strlen(old_line) - 1] == '\n')
+
+       if ((old_line && old_line[ft_strlen(old_line) - 1] == '\n') || check < BUFFER_SIZE)
            {
                ft_buffer_sort(buffer);
                return(old_line);
            }
-        read(fd, buffer, BUFFER_SIZE);
-       // if (old_line && old_line[ft_strlen(old_line) - 1] == '\n')
-       //    {
-       //        ft_buffer_sort(buffer);
-       //        return(old_line);
-       //    }
+           
+        check = read(fd, buffer, BUFFER_SIZE);
+        if (check == 0 && ft_strlen(old_line) != 0)
+        {
+               ft_clear_buff(buffer);
+               return(old_line);
+        }
         str = strjoin(old_line, ft_read(buffer));
-        //if  (str[ft_strlen(str) - 1] == '\n')
-        //{   
-        //    ft_buffer_sort(buffer);
-        //    return(str);
-        //}
-    }  
+    }
+    if ( check == 0 && ft_strlen(str) == 0)
+        return(0);
         ft_buffer_sort(buffer);
         return(str);
 }
-
 
 int main()
 {
