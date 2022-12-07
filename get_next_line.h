@@ -6,7 +6,7 @@
 /*   By: mmorue <mmorue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 13:09:37 by mmorue            #+#    #+#             */
-/*   Updated: 2022/12/06 16:34:12 by mmorue           ###   ########.fr       */
+/*   Updated: 2022/12/07 16:53:20 by mmorue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include <fcntl.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 148969
+#  define BUFFER_SIZE 10
 # endif
 
 char    *get_next_line(int fd);

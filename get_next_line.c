@@ -6,7 +6,7 @@
 /*   By: mmorue <mmorue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 13:09:32 by mmorue            #+#    #+#             */
-/*   Updated: 2022/12/06 16:34:11 by mmorue           ###   ########.fr       */
+/*   Updated: 2022/12/07 17:11:18 by mmorue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ char    *ft_buffer_sort(char *buffer)
 
     i = 0;
     k = 0;
-    while(buffer[i] != '\n' && buffer[i] != '\0')
+    while (buffer[i] != '\n' && buffer[i] != '\0')
         i++;
     if (buffer[i] == '\n')
         i++;
-    while(buffer[i] != '\0')
+    while (buffer[i] != '\0')
         buffer[k++] = buffer[i++];
     buffer[k] = '\0';
-    return(buffer);
+    return (buffer);
 }
 
 char    *ft_read(char *buffer)
@@ -42,14 +42,14 @@ char    *ft_read(char *buffer)
 
     i = 0;
     k = 0;;
-    if(ft_strlen(buffer) == 0)
+    if (ft_strlen(buffer) == 0)
         return(0);
-    while(buffer[i] != '\n' && buffer[i] != '\0')
+    while (buffer[i] != '\n' && buffer[i] != '\0')
             i++;
     if (buffer[i] == '\n')
         i++;
     str = malloc((i + 1) * sizeof(char));
-    if(!str)
+    if (!str)
         return(0);
     while (k < i)
     {
@@ -66,18 +66,24 @@ char    *get_next_line(int fd)
     char *str;
     char *old_line;
     int    loop;
-    unsigned int    check;
+    int    check;
 
     loop = 0;
     old_line = 0;
     str = 0;
     check = BUFFER_SIZE;
+    if (read(fd, 0 , 0) < 0)
+    {
+        ft_clear_buff(buffer);
+        return (0);
+    }   
     if (fd < 0 || BUFFER_SIZE < 1 || read(fd, 0 , 0) < 0)
         return (0);
+    str = strjoin(str,ft_read(buffer));
     while( loop == 0 || (check == BUFFER_SIZE  && str[ft_strlen(str) - 1] != '\n'))
     {
         loop = 1;
-        old_line = strjoin(old_line, ft_read(buffer));
+        old_line = str;
 
        if ((old_line && old_line[ft_strlen(old_line) - 1] == '\n') || check < BUFFER_SIZE)
            {
@@ -86,12 +92,19 @@ char    *get_next_line(int fd)
            }
            
         check = read(fd, buffer, BUFFER_SIZE);
+         if (check == -1)
+         {
+            ft_clear_buff(buffer);
+            return (0);
+         }   
         if (check == 0 && ft_strlen(old_line) != 0)
         {
                ft_clear_buff(buffer);
                return(old_line);
         }
         str = strjoin(old_line, ft_read(buffer));
+        
+        old_line = 0;
     }
     if ( check == 0 && ft_strlen(str) == 0)
         return(0);
@@ -99,15 +112,15 @@ char    *get_next_line(int fd)
         return(str);
 }
 
-int main()
-{
-    int fd;
-
-    fd = open("test.txt", O_RDONLY);
-    printf("%s===============\n",get_next_line(fd));
-    printf("%s===============\n",get_next_line(fd));
-    printf("%s===============\n",get_next_line(fd));
-    printf("%s===============\n",get_next_line(fd));
-    close(fd);
-    return(0);
-}
+//int main()
+//{
+//   int fd;
+//
+//   fd = open("limits.txt", O_RDONLY);
+//   printf("%s===============\n",get_next_line(fd));
+//   printf("%s===============\n",get_next_line(fd));
+//   printf("%s===============\n",get_next_line(fd));
+//   printf("%s===============\n",get_next_line(fd));
+//   close(fd);
+//   return(0);
+//}

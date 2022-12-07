@@ -6,7 +6,7 @@
 /*   By: mmorue <mmorue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 13:09:35 by mmorue            #+#    #+#             */
-/*   Updated: 2022/12/06 16:34:10 by mmorue           ###   ########.fr       */
+/*   Updated: 2022/12/07 15:43:22 by mmorue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void ft_clear_buff(char *buffer)
 	i = 0;
 
 	while(i < BUFFER_SIZE + 1)
-		buffer[i++] = '\0';		
+		buffer[i++] = '\0';
 }
 int	ft_strlen(char *str)
 {
@@ -58,7 +58,7 @@ char	*strjoin(char *s1, char *s2)
 		i++;
 		k++;
 	}
-    free(s2);
+   	free(s2);
 	str[k] = '\0';
 	return (str);
 }
