@@ -6,7 +6,7 @@
 /*   By: mmorue <mmorue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 13:09:32 by mmorue            #+#    #+#             */
-/*   Updated: 2022/12/07 17:11:18 by mmorue           ###   ########.fr       */
+/*   Updated: 2022/12/08 15:42:35 by mmorue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,10 @@ char    *ft_read(char *buffer)
         i++;
     str = malloc((i + 1) * sizeof(char));
     if (!str)
-        return(0);
+    {
+        ft_clear_buff (buffer);
+        return (0);
+    }    
     while (k < i)
     {
         str[k] = buffer[k];
@@ -67,7 +70,7 @@ char    *get_next_line(int fd)
     char *old_line;
     int    loop;
     int    check;
-
+   
     loop = 0;
     old_line = 0;
     str = 0;
@@ -90,20 +93,19 @@ char    *get_next_line(int fd)
                ft_buffer_sort(buffer);
                return(old_line);
            }
-           
+        ft_clear_buff(buffer);
         check = read(fd, buffer, BUFFER_SIZE);
          if (check == -1)
          {
             ft_clear_buff(buffer);
             return (0);
-         }   
+         }
         if (check == 0 && ft_strlen(old_line) != 0)
         {
                ft_clear_buff(buffer);
                return(old_line);
         }
         str = strjoin(old_line, ft_read(buffer));
-        
         old_line = 0;
     }
     if ( check == 0 && ft_strlen(str) == 0)
@@ -116,7 +118,7 @@ char    *get_next_line(int fd)
 //{
 //   int fd;
 //
-//   fd = open("limits.txt", O_RDONLY);
+//   fd = open("one_line_no_nl.txt", O_RDONLY);
 //   printf("%s===============\n",get_next_line(fd));
 //   printf("%s===============\n",get_next_line(fd));
 //   printf("%s===============\n",get_next_line(fd));
