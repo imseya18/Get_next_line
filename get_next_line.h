@@ -6,7 +6,7 @@
 /*   By: mmorue <mmorue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 13:09:37 by mmorue            #+#    #+#             */
-/*   Updated: 2022/12/08 15:36:26 by mmorue           ###   ########.fr       */
+/*   Updated: 2022/12/08 16:21:29 by mmorue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ char    *get_next_line(int fd);
 int	    ft_strlen(char *str);
 char	*strjoin(char *s1, char *s2);
 char    *ft_buffer_sort(char *buffer);
-char    *ft_read(char *buffer);
-void    ft_clear_buff(char *buffer);
+char    *ft_read(char *buffer, int *error);
+char    *ft_clear_buff(char *buffer);
 
 
 #endif

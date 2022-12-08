@@ -6,13 +6,13 @@
 /*   By: mmorue <mmorue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 13:09:35 by mmorue            #+#    #+#             */
-/*   Updated: 2022/12/08 15:39:20 by mmorue           ###   ########.fr       */
+/*   Updated: 2022/12/08 16:32:11 by mmorue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-void ft_clear_buff(char *buffer)
+char	*ft_clear_buff(char *buffer)
 {
 	int i;
 
@@ -20,6 +20,7 @@ void ft_clear_buff(char *buffer)
 
 	while(i < BUFFER_SIZE + 1)
 		buffer[i++] = '\0';
+	return(0);
 }
 int	ft_strlen(char *str)
 {
@@ -41,23 +42,23 @@ char	*strjoin(char *s1, char *s2)
 
 	i = 0;
 	k = 0;
-    if((s1 == 0 || s1[i] == '\0') && s2)
+    if((s1 == 0) && s2)
         return(s2);
 	if (s1 == 0 || s2 == 0)
 		return (0);
 	str = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
 	if (!str)
+	{
+		free(s1);
+		free(s2);
 		return (0);
+	}	
 	while (s1[i])
 		str[k++] = s1[i++];
     free(s1);
 	i = 0;
 	while (s2[i])
-	{
-		str[k] = s2[i];
-		i++;
-		k++;
-	}
+		str[k++] = s2[i++];
    	free(s2);
 	str[k] = '\0';
 	return (str);
