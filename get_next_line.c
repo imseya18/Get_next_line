@@ -6,13 +6,14 @@
 /*   By: mmorue <mmorue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 13:09:32 by mmorue            #+#    #+#             */
-/*   Updated: 2022/12/08 17:13:16 by mmorue           ###   ########.fr       */
+/*   Updated: 2022/12/09 15:21:19 by mmorue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdlib.h>
 #include <fcntl.h>
+//#include "wraloc.h"
 
 char	*ft_buffer_sort(char *buffer)
 {
@@ -104,19 +105,24 @@ char	*get_next_line(int fd)
 	}
 	if (check == 0 && ft_strlen(str) == 0)
 		return (0);
-	ft_buffer_sort(buffer);
+    ft_buffer_sort(buffer);
 	return (str);
 }
 
 //int main()
 //{
 //   int fd;
+//   char *tmp;
 //
 //   fd = open("one_line_no_nl.txt", O_RDONLY);
-//   printf("%s===============\n",get_next_line(fd));
-//   printf("%s===============\n",get_next_line(fd));
-//   printf("%s===============\n",get_next_line(fd));
-//   printf("%s===============\n",get_next_line(fd));
-//   close(fd);
+//   tmp = get_next_line(fd);
+//   printf("%s===============\n",tmp);
+//   free(tmp);
+//   tmp = get_next_line(fd);
+//   printf("%s===============\n",tmp);
+//   //printf("%s===============\n",get_next_line(fd));
+//   //printf("%s===============\n",get_next_line(fd));
+//   close(fd); 
+//   free(tmp);
 //   return(0);
 //}
