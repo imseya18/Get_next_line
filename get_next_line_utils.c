@@ -6,12 +6,11 @@
 /*   By: mmorue <mmorue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 13:09:35 by mmorue            #+#    #+#             */
-/*   Updated: 2022/12/09 15:21:20 by mmorue           ###   ########.fr       */
+/*   Updated: 2022/12/09 16:15:13 by mmorue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-//#include "wraloc.h"
 
 char	*ft_clear_buff(char *buffer)
 {
@@ -35,27 +34,13 @@ int	ft_strlen(char *str)
 	return (i);
 }
 
-char	*strjoin(char *s1, char *s2)
+void	strfill(char *str, char *s1, char *s2)
 {
 	int		i;
 	int		k;
-	char	*str;
 
 	i = 0;
 	k = 0;
-	if ((s1 == 0) && s2)
-		return (s2);
-	if ((s2 == 0) && s1)
-		return (s1);
-	if (s1 == 0 || s2 == 0)
-		return (0);
-	str = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
-	if (!str)
-	{
-		free(s1);
-		free(s2);
-		return (0);
-	}	
 	while (s1[i])
 		str[k++] = s1[i++];
 	free(s1);
@@ -64,5 +49,25 @@ char	*strjoin(char *s1, char *s2)
 		str[k++] = s2[i++];
 	free(s2);
 	str[k] = '\0';
+}
+
+char	*strjoin(char *s1, char *s2)
+{
+	char	*str;
+
+	if ((s1 == 0) && s2)
+		return (s2);
+	if ((s2 == 0) && s1)
+		return (s1);
+	if (s1 == 0 || s2 == 0)
+		return (0);
+	str = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
+	if (!str)
+	{	
+		free(s1);
+		free (s2);
+		return (0);
+	}
+	strfill(str, s1, s2);
 	return (str);
 }
