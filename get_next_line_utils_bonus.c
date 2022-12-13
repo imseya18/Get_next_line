@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmorue <mmorue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/29 13:09:35 by mmorue            #+#    #+#             */
-/*   Updated: 2022/12/13 17:12:38 by mmorue           ###   ########.fr       */
+/*   Created: 2022/12/13 16:25:34 by mmorue            #+#    #+#             */
+/*   Updated: 2022/12/13 17:12:37 by mmorue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_clear_buff(int behavior, char *buffer)
 {
