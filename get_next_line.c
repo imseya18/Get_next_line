@@ -6,14 +6,11 @@
 /*   By: mmorue <mmorue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 13:09:32 by mmorue            #+#    #+#             */
-/*   Updated: 2022/12/09 15:21:19 by mmorue           ###   ########.fr       */
+/*   Updated: 2022/12/13 16:15:48 by mmorue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdlib.h>
-#include <fcntl.h>
-//#include "wraloc.h"
 
 char	*ft_buffer_sort(char *buffer)
 {
@@ -50,7 +47,7 @@ char	*ft_read(char *buffer, int *error)
 	if (!str)
 	{
 		*error = -1;
-		return (ft_clear_buff (buffer));
+		return (ft_clear_buff (0, buffer));
 	}
 	while (k < i)
 	{
@@ -61,68 +58,44 @@ char	*ft_read(char *buffer, int *error)
 	return (str);
 }
 
+char	*test(char *str, int fd, char *buffer, int error)
+{
+	int	check;
+
+	check = BUFFER_SIZE;
+	while (check == BUFFER_SIZE)
+	{
+		if ((str && str[ft_strlen(str) - 1] == '\n'))
+		{
+			ft_buffer_sort(buffer);
+			return (str);
+		}
+		ft_clear_buff(0, buffer);
+		check = read(fd, buffer, BUFFER_SIZE);
+		if (check == -1)
+			return (ft_clear_buff(0, buffer));
+		str = strjoin(str, ft_read(buffer, &error));
+		if (error == -1 || !str)
+			return (ft_clear_buff(1, str));
+	}
+	ft_buffer_sort(buffer);
+	return (str);
+}
+
 char	*get_next_line(int fd)
 {
 	static char	buffer[BUFFER_SIZE + 1];
 	char		*str;
-	int			l;
-	int			check;
 	int			error;
 
-	l = 0;
-	check = BUFFER_SIZE;
 	error = 0;
 	if (read(fd, 0, 0) < 0)
-		return (ft_clear_buff(buffer));
+		return (ft_clear_buff(0, buffer));
 	if (fd < 0 || BUFFER_SIZE < 1)
 		return (0);
 	str = ft_read(buffer, &error);
 	if (error == -1)
 		return (0);
-	while (l == 0 || (check == BUFFER_SIZE && str[ft_strlen(str) - 1] != '\n'))
-	{
-		l = 1;
-		if ((str && str[ft_strlen(str) - 1] == '\n') || check < BUFFER_SIZE)
-		{
-			ft_buffer_sort(buffer);
-			return (str);
-		}
-		ft_clear_buff(buffer);
-		check = read(fd, buffer, BUFFER_SIZE);
-		if (check == -1)
-			return (ft_clear_buff(buffer));
-		if (check == 0 && ft_strlen(str) != 0)
-		{
-			ft_clear_buff(buffer);
-			return (str);
-		}
-		str = strjoin(str, ft_read(buffer, &error));
-		if (error == -1 || !str)
-		{
-			free(str);
-			return (0);
-		}
-	}
-	if (check == 0 && ft_strlen(str) == 0)
-		return (0);
-    ft_buffer_sort(buffer);
+	str = test(str, fd, buffer, error);
 	return (str);
 }
-
-//int main()
-//{
-//   int fd;
-//   char *tmp;
-//
-//   fd = open("one_line_no_nl.txt", O_RDONLY);
-//   tmp = get_next_line(fd);
-//   printf("%s===============\n",tmp);
-//   free(tmp);
-//   tmp = get_next_line(fd);
-//   printf("%s===============\n",tmp);
-//   //printf("%s===============\n",get_next_line(fd));
-//   //printf("%s===============\n",get_next_line(fd));
-//   close(fd); 
-//   free(tmp);
-//   return(0);
-//}

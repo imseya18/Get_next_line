@@ -6,19 +6,24 @@
 /*   By: mmorue <mmorue@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 13:09:35 by mmorue            #+#    #+#             */
-/*   Updated: 2022/12/09 16:15:13 by mmorue           ###   ########.fr       */
+/*   Updated: 2022/12/13 16:15:50 by mmorue           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_clear_buff(char *buffer)
+char	*ft_clear_buff(int behavior, char *buffer)
 {
 	int	i;
 
 	i = 0;
-	while (i < BUFFER_SIZE + 1)
-		buffer[i++] = '\0';
+	if (behavior == 0)
+	{
+		while (i < BUFFER_SIZE + 1)
+			buffer[i++] = '\0';
+	}
+	if (behavior == 1)
+		free(buffer);
 	return (0);
 }
 
